@@ -14,6 +14,6 @@ templates = Jinja2Templates(directory="./templates")
 async def obtener(request : Request):
     return templates.TemplateResponse('index.html', {'request': request})
 
-@app.post('/calculado')
+@app.post('/cambio')
 async def mandar(request : Request): 
     pass
