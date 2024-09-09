@@ -6,3 +6,6 @@ db = cliente.Rifas
 
 Tickets = db.Tickets
 Rifas = db.Rifas
+Jugadores = db.Jugadores
+Premios = db.Premios
+Administradores = db.Administradores
