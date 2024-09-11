@@ -10,7 +10,7 @@ templates = Jinja2Templates(directory="./templates")
 
 @router.get('')
 async def listar_clientes(request : Request): 
-    lista = await servicio.listar_jugadores()
+    lista = servicio.listar_jugadores()
     return lista
     # return templates.TemplateResponse('principal.html', {
     #     'request': request, 'lista': lista
@@ -18,5 +18,5 @@ async def listar_clientes(request : Request):
 
 @router.post('')
 async def registrar_cliente(request : Request, cliente : Cliente): 
-    esto = await servicio.registrar_jugador(cliente)
+    esto = servicio.registrar_jugador(cliente)
     return esto
