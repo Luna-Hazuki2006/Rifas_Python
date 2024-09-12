@@ -6,6 +6,7 @@ from fastapi.responses import RedirectResponse
 from cliente import router as cliente
 from administradores import router as adminis
 from Rifa import router as rifas
+from Ticket import router as ticket
 
 app = FastAPI()
 
@@ -16,6 +17,7 @@ templates = Jinja2Templates(directory="./templates")
 app.include_router(cliente.router, prefix='/clientes', tags=['Clientes'])
 app.include_router(adminis.router, prefix='/admins', tags=['Administradores'])
 app.include_router(rifas.router, prefix='/rifas', tags=['Rifas'])
+app.include_router(ticket.router, prefix='/tickets', tags=['Tickets'])
 
 @app.get("/")
 async def obtener(request : Request):

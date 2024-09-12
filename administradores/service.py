@@ -7,5 +7,15 @@ def registrar_administradores(admin : Administrador):
     else: return 'No se pudo registrar el administrador'
 
 def listar_administradores(): 
-    lista = Administradores.find({})
+    lista = []
+    for esto in Administradores.find({}): 
+        uno = Administrador(
+            cedula=esto['cedula'], 
+            nombre=esto['nombre'], 
+            apellido=esto['apellido'], 
+            correo=esto['correo'])
+        lista.append(uno)
     return lista
+
+def iniciar_sesion(): 
+    return 'holaaaaaaa'

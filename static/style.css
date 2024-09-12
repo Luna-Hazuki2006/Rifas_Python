@@ -1,3 +1,34 @@
 h1, h3 {
     text-align: center;
 }
+
+fieldset {
+    display: grid;
+    grid-template-columns: 1;
+    margin-left: 30%;
+    margin-right: 30%;
+    border-radius: 15px;
+}
+
+fieldset legend {
+    color: grey;
+}
+
+fieldset label {
+    margin: 2%;
+    display: grid;
+    grid-template-columns: 1;
+}
+
+fieldset button {
+    background-color: crimson;
+    color: aliceblue;
+    padding: 1%;
+    margin: 2%;
+    border-radius: 5px;
+}
+
+fieldset p {
+    text-align: center;
+    color: grey;
+}

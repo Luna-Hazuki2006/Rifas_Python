@@ -4,15 +4,57 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ url_for('static', path='style.css') }}">
+    <script src="{{ url_for('static', path='index.js') }}" defer></script>
     <title>Rifas</title>
 </head>
 <body>
     <h1>Bienvenido a "Rifas en línea"</h1>
     <h3>¿Qué deseas hacer?</h3>
     <div>
-        <a href="">
+        <details>
+            <summary>¡Crear una rifa!</summary>
+            <form action="/rifas" method="post">
+                <fieldset>
+                    <legend>Creación de una rifa</legend>
+                    <label for="codigo">
+                        <span>Código: </span>
+                        <input type="text" name="codigo" id="codigo" onchange="revisar();" required>
+                    </label>
+                    <label for="premio">
+                        <span>Premio: </span>
+                        <input type="url" name="premio" id="premio" required>
+                    </label>
+                    <label for="inicio">
+                        <span>Inicio: </span>
+                        <input type="date" name="inicio" id="inicio" required>
+                    </label>
+                    <label for="final">
+                        <span>Final: </span>
+                        <input type="date" name="final" id="final" required>
+                    </label>
+                    <label for="cantidad_tickets">
+                        <span>Cantidad de tickets: </span>
+                        <input type="number" name="cantidad_tickets" id="cantidad_tickets" min="2" step="1" required>
+                    </label>
+                    <label for="primer_numero">
+                        <span>Primer número: </span>
+                        <input type="number" name="primer_numero" id="primer_numero" value="1" min="1" required>
+                    </label>
+                    <label for="sorteo">
+                        <span>Sorteo: </span>
+                        <input type="date" name="sorteo" id="sorteo" required>
+                    </label>
+                    <label for="monto_renta">
+                        <span>Monto de renta: </span>
+                        <input type="number" name="monto_renta" id="monto_renta" min="1" step="0.5" required>
+                    </label>
+                    <button id="rifar" type="submit">¡Crear la rifa!</button>
+                </fieldset>
+            </form>
+        </details>
+        <!-- <a href="">
             <button type="button">¡Crear una rifa!</button>
-        </a>
+        </a> -->
         <details>
             <summary>
                 <button type="button">¡Entrar en una rifa!</button>

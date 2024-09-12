@@ -20,3 +20,4 @@ async def listar_clientes(request : Request):
 async def registrar_cliente(request : Request, cliente : Cliente): 
     esto = servicio.registrar_jugador(cliente)
     return esto
+

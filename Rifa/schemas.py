@@ -6,7 +6,7 @@ class Rifa(BaseModel):
     premio : str
     inicio : datetime
     final : datetime
-    cantiddad_tickets : int
+    cantidad_tickets : int
     primer_numero : int
     sorteo : datetime
     monto_renta : float
