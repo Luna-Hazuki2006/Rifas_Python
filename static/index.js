@@ -14,7 +14,7 @@ async function revisar() {
         throw new Error(`Response status: ${response.status}`);
         }
         const json = await response.json();
-        if (json === true) rifar.setAttribute('disabled', '')
+        if (json === false) rifar.setAttribute('disabled', '')
         else rifar.removeAttribute('disabled')
     } catch (error) {
         console.error(error.message);

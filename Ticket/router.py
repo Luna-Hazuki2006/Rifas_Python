@@ -17,3 +17,8 @@ async def listar_Tickets(request : Request):
 async def listar_Ticket_rifa(request : Request, rifa : str): 
     esto = servicio.listar_tickets_rifa(rifa)
     return esto
+
+@router.post('/{rifa}')
+async def comprar_ticket(request : Request, rifa : str, numero : int, cedula : str): 
+    esto = servicio.comprar_ticket(rifa, numero, cedula)
+    return esto

@@ -1,7 +1,7 @@
 from pydantic import BaseModel
+from typing import Union
 
 class Ticket(BaseModel):
-    rifa :  str
     numero : int
-    estatus : bool
-    ganador : bool
+    estatus : Union[bool, str] = False
+    ganador : bool = False

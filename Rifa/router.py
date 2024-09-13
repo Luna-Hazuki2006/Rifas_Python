@@ -13,12 +13,16 @@ async def listar_rifas(request : Request):
     lista = servicio.listar_rifas()
     return lista
 
+@router.get('/actuales')
+async def buscar_actuales(request : Request): 
+    return servicio.listar_rifas_actuales()
+
 @router.get('/{codigo}')
 async def buscar_rifa(request : Request, codigo : str): 
     return servicio.buscar_rifa(codigo)
 
 @router.get('/revision/{codigo}')
-async def buscar_rifa(request : Request, codigo : str): 
+async def revisar_rifa(request : Request, codigo : str): 
     return servicio.revisar_codigo(codigo)
 
 @router.post('')
