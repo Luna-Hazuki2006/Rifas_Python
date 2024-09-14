@@ -44,9 +44,9 @@
                         <span>Sorteo: </span>
                         <input type="date" name="sorteo" id="sorteo" required>
                     </label>
-                    <label for="monto_renta">
-                        <span>Monto de renta: </span>
-                        <input type="number" name="monto_renta" id="monto_renta" min="1" step="0.5" required>
+                    <label for="monto_venta">
+                        <span>Monto de venta: </span>
+                        <input type="number" name="monto_venta" id="monto_venta" min="1" step="0.5" required>
                     </label>
                     <button id="rifar" type="submit">¡Crear la rifa!</button>
                 </fieldset>
@@ -56,10 +56,18 @@
             <button type="button">¡Crear una rifa!</button>
         </a> -->
         <details>
-            <summary>
-                <button type="button">¡Entrar en una rifa!</button>
-            </summary>
-            <p>Holaaaaaaaa</p>
+            <summary>¡Entrar en una rifa!</summary>
+            <form action="/rifas/entrar" method="post">
+                <label for="codigo">
+                    <span>Código: </span>
+                    <select name="codigo" id="codigo" required>
+                        {% for esto in rifas %}
+                        <option value="{{ esto['codigo'] }}">{{ esto['codigo'] }}</option>
+                        {% endfor %}
+                    </select>
+                </label>
+                <button type="submit">Entrar en rifa</button>
+            </form>
         </details>
     </div>
 </body>

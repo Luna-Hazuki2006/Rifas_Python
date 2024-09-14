@@ -74,7 +74,9 @@ async def create_auth_header(request: Request, call_next,):
 
 @app.get("/")
 async def obtener(request : Request):
-    return templates.TemplateResponse('index.html', {'request': request})
+    lista = rifas.servicio.listar_rifas_actuales()
+    return templates.TemplateResponse('index.html', {
+        'request': request, 'rifas': lista})
 
 @app.post('/cambio')
 async def mandar(request : Request): 

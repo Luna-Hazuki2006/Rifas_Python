@@ -9,5 +9,5 @@ class Rifa(BaseModel):
     cantidad_tickets : int
     primer_numero : int
     sorteo : datetime
-    monto_renta : float
+    monto_venta : float
     tickets : list[dict] = []

@@ -38,7 +38,7 @@ def buscar_rifa(codigo : str):
         cantidad_tickets=este['cantidad_tickets'], 
         primer_numero=este['primer_numero'], 
         sorteo=este['sorteo'], 
-        monto_renta=este['monto_renta'], 
+        monto_venta=este['monto_venta'], 
         tickets=este['tickets']
     )
     return este

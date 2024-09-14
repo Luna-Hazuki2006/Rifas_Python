@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', path='style.css') }}">
+    <script src="{{ url_for('static', path='rifa.js') }}" defer></script>
+    <title>Document</title>
+</head>
+<body>
+    <h1>¡Hora de votar!</h1>
+    <section id="tickets">
+        {% for esto in rifa['tickets'] %}
+        {% if esto['status'] == False %}
+        <div id="{{ esto['numero'] }}">{{ esto['numero'] }}</div>
+        {% else %}
+        <div></div>
+        {% endif %}
+        {% endfor %}
+    </section>
+</body>
+</html>
