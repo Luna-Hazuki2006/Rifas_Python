@@ -44,4 +44,15 @@ fieldset p {
     border-radius: 5px;
     border: 1px solid crimson;
     background-color: aquamarine;
+    font-size: x-large;
+}
+
+.comprado {
+    background-color: crimson;
+    color: aliceblue;
+    border: 1px solid green;
+}
+
+.disponible:hover {
+    cursor: pointer;
 }

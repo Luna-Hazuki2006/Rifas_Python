@@ -30,5 +30,5 @@ async def registrar_rifa(request : Request, rifa : Annotated[Rifa, Form()]):
 @router.post('/entrar')
 async def buscar_rifa(request : Request, codigo : Annotated[str, Form()]): 
     rifa = servicio.buscar_rifa(codigo)
-    return templates.TemplateResponse('index.html', {
+    return templates.TemplateResponse('rifa.html', {
         'request': request, 'rifa': rifa})

@@ -11,10 +11,10 @@
     <h1>¡Hora de votar!</h1>
     <section id="tickets">
         {% for esto in rifa['tickets'] %}
-        {% if esto['status'] == False %}
-        <div id="{{ esto['numero'] }}">{{ esto['numero'] }}</div>
+        {% if esto['estatus'] == False %}
+        <div class="disponible" id="{{ esto['numero'] }}">{{ esto['numero'] }}</div>
         {% else %}
-        <div></div>
+        <div class="comprado" id="{{ esto['numero'] }}">{{ esto['numero'] }}</div>
         {% endif %}
         {% endfor %}
     </section>
