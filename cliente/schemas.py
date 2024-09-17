@@ -1,7 +1,5 @@
 from pydantic import BaseModel, EmailStr
+from login import Usuario
 
-class Cliente(BaseModel): 
-    cedula : str
-    nombre : str
-    apellido : str
-    correo : EmailStr
+class Cliente(Usuario): 
+    pass

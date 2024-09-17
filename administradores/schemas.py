@@ -1,7 +1,4 @@
-from pydantic import BaseModel, EmailStr
+from login import Usuario
 
-class Administrador(BaseModel): 
-    cedula : str
-    nombre : str
-    apellido : str
-    correo : EmailStr
+class Administrador(Usuario): 
+    pass

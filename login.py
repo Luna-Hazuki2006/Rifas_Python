@@ -3,6 +3,15 @@ from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from passlib.context import CryptContext
 from fastapi import Security
 from datetime import datetime, timezone, timedelta
+from bd import cliente, Administradores
+from pydantic import BaseModel, EmailStr
+
+class Usuario(BaseModel): 
+    cedula : str
+    nombre : str
+    apellido : str
+    correo : EmailStr
+    contraseña : str
 
 class AuthHandler():
     security = HTTPBearer()
@@ -49,9 +58,9 @@ class AuthHandler():
         return self.pwd_context.verify(plain_password, hash_password)
 
 
-    async def authenticate_user(self, nombre_usuario: str, contraseña: str):
+    async def authenticate_user(self, cedula: str, contraseña: str, tipo : str):
         try:
-            usuario = obtener_usuario(nombre_usuario)
+            usuario = obtener_usuario(cedula, tipo)
             if usuario: 
                 password_check = self.verify_password(contraseña, usuario.contraseña)
                 if password_check: 
@@ -66,14 +75,16 @@ class AuthHandler():
             raise Exception('Se necesita iniciar sesión')
 
 # MODIFICAR
-async def obtener_usuario(nombre_usuario : str): 
-    usuario = Usuarios.find_one({'nombre_usuario': nombre_usuario})
+async def obtener_usuario(cedula : str, tipo : str): 
+    if tipo == 'cliente': 
+        usuario = cliente.find_one({'cedula': cedula})
+    elif tipo == 'admin' or tipo == 'administrador': 
+        usuario = Administradores.find_one({'cedula': cedula})
     usuario = dict(Usuario(
-        nombre_usuario=usuario['nombre_usuario'], 
-        nombres=usuario['nombres'], 
-        apellidos=usuario['apellidos'], 
-        imagen=usuario['imagen'], 
-        nacimiento=usuario['nacimiento'], 
-        contraseña=['contraseña']
+        cedula=usuario['cedula'], 
+        nombre=usuario['nombre'], 
+        apellido=usuario['apellido'], 
+        correo=usuario['correo'], 
+        contraseña=usuario['contraseña']
     ))
     return usuario
