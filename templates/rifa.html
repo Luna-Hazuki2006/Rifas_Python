@@ -10,6 +10,7 @@
 <body>
     <h1>¡Hora de comprar tu ticket en la rifa {{ rifa['codigo'] }}!</h1>
     <p id="aviso"></p>
+    <p><b>Con un clic seleccionas, con dos se quita la seleción.</b></p>
     <input type="hidden" name="final" id="final" value="{{ rifa['final'] }}">
     <form action="/tickets/{{ rifa['codigo'] }}" method="post">
         <input type="hidden" name="numero" id="numero" required>
