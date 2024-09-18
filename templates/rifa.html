@@ -8,7 +8,14 @@
     <title>Document</title>
 </head>
 <body>
-    <h1>¡Hora de votar!</h1>
+    <h1>¡Hora de comprar tu ticket en la rifa {{ rifa['codigo'] }}!</h1>
+    <p id="aviso"></p>
+    <input type="hidden" name="final" id="final" value="{{ rifa['final'] }}">
+    <form action="/tickets/{{ rifa['codigo'] }}" method="post">
+        <input type="hidden" name="numero" id="numero" required>
+        <input type="hidden" name="cedula" id="cedula" required>
+        <button type="submit">¡Comprar!</button>
+    </form>
     <section id="tickets">
         {% for esto in rifa['tickets'] %}
         {% if esto['estatus'] == False %}

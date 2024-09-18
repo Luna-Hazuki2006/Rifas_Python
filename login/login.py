@@ -13,6 +13,13 @@ class Usuario(BaseModel):
     correo : EmailStr
     contraseña : str
 
+class Creacion(Usuario): 
+    tipo : str
+
+class Inicio(BaseModel): 
+    cedula : str
+    contraseña : str
+
 class AuthHandler():
     security = HTTPBearer()
     pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")

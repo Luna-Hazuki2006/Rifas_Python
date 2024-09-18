@@ -9,10 +9,101 @@
 </head>
 <body>
     <h1>Bienvenido a "Rifas en línea"</h1>
-    <h3>¿Qué deseas hacer?</h3>
     <header>
-        
+        <details>
+            <summary>¡Regístrate como administrador!</summary>
+            <form action="/admins" method="post">
+                <fieldset>
+                    <legend>¡Un creador de rifas!</legend>
+                    <label for="cedula">
+                        <span>Cédula: </span>
+                        <input type="text" name="cedula" id="cedula" required>
+                    </label>
+                    <label for="nombre">
+                        <span>Nombres: </span>
+                        <input type="text" name="nombre" id="nombre" required>
+                    </label>
+                    <label for="apellido">
+                        <span>Apellidos: </span>
+                        <input type="text" name="apellido" id="apellido" required>
+                    </label>
+                    <label for="correo">
+                        <span>Correo: </span>
+                        <input type="email" name="correo" id="correo" required>
+                    </label>
+                    <label for="contraseña">
+                        <span>Contraseña: </span>
+                        <input type="password" name="contraseña" id="contraseña" required>
+                    </label>
+                    <button type="submit">¡Regístrate!</button>
+                </fieldset>
+            </form>
+        </details>
+        <details>
+            <summary>¡Regístrate como cliente!</summary>
+            <form action="/clientes" method="post">
+                <fieldset>
+                    <legend>¡Un jugador de rifas!</legend>
+                    <label for="cedula">
+                        <span>Cédula: </span>
+                        <input type="text" name="cedula" id="cedula" required>
+                    </label>
+                    <label for="nombre">
+                        <span>Nombres: </span>
+                        <input type="text" name="nombre" id="nombre" required>
+                    </label>
+                    <label for="apellido">
+                        <span>Apellidos: </span>
+                        <input type="text" name="apellido" id="apellido" required>
+                    </label>
+                    <label for="correo">
+                        <span>Correo: </span>
+                        <input type="email" name="correo" id="correo" required>
+                    </label>
+                    <label for="contraseña">
+                        <span>Contraseña: </span>
+                        <input type="password" name="contraseña" id="contraseña" required>
+                    </label>
+                    <button type="submit">¡Regístrate!</button>
+                </fieldset>
+            </form>
+        </details>
+        <details>
+            <summary>¡Inicia sesión como administrador!</summary>
+            <form action="/admins/iniciar" method="post">
+                <fieldset>
+                    <legend>¡Hola admin!</legend>
+                    <label for="cedula">
+                        <span>Cédula: </span>
+                        <input type="text" name="cedula" id="cedula" required>
+                    </label>
+                    <label for="contraseña">
+                        <span>Contraseña: </span>
+                        <input type="password" name="contraseña" id="contraseña" required>
+                    </label>
+                    <button type="submit">¡Inicia sesión!</button>
+                </fieldset>
+            </form>
+        </details>
+        <details>
+            <summary>¡Inicia sesión como cliente!</summary>
+            <form action="/clientes/iniciar" method="post">
+                <fieldset>
+                    <legend>¡Hola jugador!</legend>
+                    <label for="cedula">
+                        <span>Cédula: </span>
+                        <input type="text" name="cedula" id="cedula" required>
+                    </label>
+                    <label for="contraseña">
+                        <span>Contraseña: </span>
+                        <input type="password" name="contraseña" id="contraseña" required>
+                    </label>
+                    <button type="submit">¡Inicia sesión!</button>
+                </fieldset>
+            </form>
+        </details>
     </header>
+    <h3>¿Qué deseas hacer?</h3>
     <div>
         <details>
             <summary>¡Crear una rifa!</summary>
@@ -55,9 +146,7 @@
                 </fieldset>
             </form>
         </details>
-        <!-- <a href="">
-            <button type="button">¡Crear una rifa!</button>
-        </a> -->
+        {% if rifas.__len__() > 0 %}
         <details>
             <summary>¡Entrar en una rifa!</summary>
             <form action="/rifas/entrar" method="post">
@@ -72,6 +161,9 @@
                 <button type="submit">Entrar en rifa</button>
             </form>
         </details>
+        {% else %}
+        <p>Por ahora no hay ninguna rifa activa ¡Espera a que se cree una!</p>
+        {% endif %}
     </div>
 </body>
 </html>

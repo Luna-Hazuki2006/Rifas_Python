@@ -5,3 +5,7 @@ class Ticket(BaseModel):
     numero : int
     estatus : Union[bool, str] = False
     ganador : bool = False
+
+class Comprado(BaseModel): 
+    numero : int
+    cedula : str

@@ -33,6 +33,16 @@ fieldset p {
     color: grey;
 }
 
+summary:hover {
+    cursor: pointer;
+}
+
+header {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
 #tickets {
     display: flex;
     align-items: center;
@@ -42,15 +52,27 @@ fieldset p {
 
 #tickets div {
     border-radius: 5px;
-    border: 1px solid crimson;
-    background-color: aquamarine;
     font-size: x-large;
+    padding: 5px;
+    margin: 2%;
 }
 
 .comprado {
     background-color: crimson;
     color: aliceblue;
     border: 1px solid green;
+}
+
+.disponible {
+    border: 1px solid crimson;
+    background-color: aquamarine;
+    color: black;
+}
+
+.elegido {
+    border: 1px solid crimson;
+    background-color: cornflowerblue;
+    color: black;
 }
 
 .disponible:hover {
