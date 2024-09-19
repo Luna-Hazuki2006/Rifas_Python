@@ -76,8 +76,16 @@ async def create_auth_header(request: Request, call_next,):
 async def obtener(request : Request):
     lista = rifas.servicio.listar_rifas_actuales()
     return templates.TemplateResponse('index.html', {
-        'request': request, 'rifas': lista})
+        'request': request, 'rifas': lista, 'verdad': False})
 
 @app.post('/cambio')
 async def mandar(request : Request): 
     pass
+
+@app.post('/cerrar_sesion')
+async def cerrar_sesion(request : Request, response : Response): 
+    response.delete_cookie(key="Authorization")
+    lista = rifas.servicio.listar_rifas_actuales()
+    templates.TemplateResponse('index.html', {
+        'request': request, 'rifas': lista, 'verdad': False})
+    return response

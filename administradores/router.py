@@ -1,9 +1,10 @@
-from fastapi import APIRouter, Request, Form
+from fastapi import APIRouter, Request, Form, Response
 from typing import Annotated
 from administradores.schemas import Administrador
 import administradores.service as servicio
 from fastapi.templating import Jinja2Templates
 from login.login import Inicio, AuthHandler
+import Rifa.service as rifas
 from datetime import datetime
 
 router = APIRouter()
@@ -26,5 +27,11 @@ async def registrar_administrador(request : Request, admin : Annotated[Administr
     return esto
 
 @router.post('/iniciar')
-async def iniciar_sesion(request : Request, data : Annotated[Inicio, Form()]): 
-    pass
+async def iniciar_sesion(request : Request, response : Response, data : Annotated[Inicio, Form()]): 
+    esto = await auth_handler.authenticate_user(data.cedula, data.contraseña, 'admin')
+    completo = f'{esto.nombre} {esto.apellido}'
+    atoken = auth_handler.create_access_token(data={'cedula': esto.cedula, 'nombre_completo': completo, 'tipo': 'admin', 'correo': esto.correo})
+    response.set_cookie(key="Authorization", value= f"{atoken}", httponly=True)
+    lista = rifas.listar_rifas_actuales()
+    return templates.TemplateResponse('index.html', {
+        'request': request, 'rifas': lista, 'verdad': True})

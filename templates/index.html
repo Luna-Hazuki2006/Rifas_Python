@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="{{ url_for('static', path='ganar.ico') }}" type="image/x-icon">
     <link rel="stylesheet" href="{{ url_for('static', path='style.css') }}">
     <script src="{{ url_for('static', path='index.js') }}" defer></script>
     <title>Rifas</title>
@@ -10,6 +11,11 @@
 <body>
     <h1>Bienvenido a "Rifas en línea"</h1>
     <header>
+        {% if verdad %}
+        <form action="/cerrar_sesion" method="post">
+            <button type="submit">Cerrar sesión</button>
+        </form>
+        {% else %}
         <details>
             <summary>¡Regístrate como administrador!</summary>
             <form action="/admins" method="post">
@@ -81,7 +87,7 @@
                         <span>Contraseña: </span>
                         <input type="password" name="contraseña" id="contraseña" required>
                     </label>
-                    <button type="submit">¡Inicia sesión!</button>
+                    <button type="submit" >¡Inicia sesión!</button>
                 </fieldset>
             </form>
         </details>
@@ -102,9 +108,12 @@
                 </fieldset>
             </form>
         </details>
+        {% endif %}
     </header>
+    {% if verdad %}
     <h3>¿Qué deseas hacer?</h3>
     <div>
+
         <details>
             <summary>¡Crear una rifa!</summary>
             <form action="/rifas" method="post">
@@ -165,5 +174,8 @@
         <p>Por ahora no hay ninguna rifa activa ¡Espera a que se cree una!</p>
         {% endif %}
     </div>
+    {% else %}
+    <p>Por favor, inicie sesión :'v</p>
+    {% endif %}
 </body>
 </html>

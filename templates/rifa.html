@@ -3,11 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="{{ url_for('static', path='ganar.ico') }}" type="image/x-icon">
     <link rel="stylesheet" href="{{ url_for('static', path='style.css') }}">
     <script src="{{ url_for('static', path='rifa.js') }}" defer></script>
     <title>Document</title>
 </head>
 <body>
+    <p><a href="/"><span class="atras">⬅</span></a></p>
     <h1>¡Hora de comprar tu ticket en la rifa {{ rifa['codigo'] }}!</h1>
     <p id="aviso"></p>
     <p><b>Con un clic seleccionas, con dos se quita la seleción.</b></p>

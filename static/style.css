@@ -78,3 +78,11 @@ header {
 .disponible:hover {
     cursor: pointer;
 }
+
+.atras {
+    font-size: xx-large;
+    border-radius: 50%;
+    color: azure;
+    background-color: brown;
+    border: 1px solid purple;
+}

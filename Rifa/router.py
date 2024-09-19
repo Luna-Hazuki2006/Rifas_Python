@@ -1,11 +1,14 @@
-from fastapi import APIRouter, Request, Form
+from fastapi import APIRouter, Request, Form, Depends
 from typing import Annotated
 from Rifa.schemas import Rifa
 import Rifa.service as servicio
 from fastapi.templating import Jinja2Templates
+from login.login import AuthHandler
 from datetime import datetime
 
 router = APIRouter()
+
+auth_handler = AuthHandler()
 
 templates = Jinja2Templates(directory="./templates")
 
@@ -22,13 +25,17 @@ async def buscar_actuales(request : Request):
 async def revisar_rifa(request : Request, codigo : str): 
     return servicio.revisar_codigo(codigo)
 
+@router.get('/tiempo/{tiempo}')
+async def obtener_tiempo(tiempo : datetime): 
+    return servicio.buscar_tiempo(tiempo)
+
 @router.post('')
 async def registrar_rifa(request : Request, rifa : Annotated[Rifa, Form()]):
     esto = servicio.registrar_rifas(rifa)
     return esto
 
 @router.post('/entrar')
-async def buscar_rifa(request : Request, codigo : Annotated[str, Form()]): 
+async def buscar_rifa(request : Request, codigo : Annotated[str, Form()], info = Depends(auth_handler.auth_wrapper)): 
     rifa = servicio.buscar_rifa(codigo)
     return templates.TemplateResponse('rifa.html', {
-        'request': request, 'rifa': rifa})
+        'request': request, 'rifa': rifa, 'info': info})

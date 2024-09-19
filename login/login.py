@@ -3,7 +3,7 @@ from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from passlib.context import CryptContext
 from fastapi import Security
 from datetime import datetime, timezone, timedelta
-from bd import cliente, Administradores
+from bd import Jugadores, Administradores
 from pydantic import BaseModel, EmailStr
 
 class Usuario(BaseModel): 
@@ -69,8 +69,9 @@ class AuthHandler():
         try:
             usuario = obtener_usuario(cedula, tipo)
             if usuario: 
-                password_check = self.verify_password(contraseña, usuario.contraseña)
-                if password_check: 
+                # password_check = self.verify_password(contraseña, usuario.contraseña)
+                # if password_check: 
+                if contraseña == usuario.contraseña: 
                     return usuario
                 else: 
                     return False
@@ -82,16 +83,16 @@ class AuthHandler():
             raise Exception('Se necesita iniciar sesión')
 
 # MODIFICAR
-async def obtener_usuario(cedula : str, tipo : str): 
+def obtener_usuario(cedula : str, tipo : str): 
     if tipo == 'cliente': 
-        usuario = cliente.find_one({'cedula': cedula})
+        usuario = Jugadores.find_one({'cedula': cedula})
     elif tipo == 'admin' or tipo == 'administrador': 
         usuario = Administradores.find_one({'cedula': cedula})
-    usuario = dict(Usuario(
+    usuario = Usuario(
         cedula=usuario['cedula'], 
         nombre=usuario['nombre'], 
         apellido=usuario['apellido'], 
         correo=usuario['correo'], 
         contraseña=usuario['contraseña']
-    ))
+    )
     return usuario

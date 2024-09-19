@@ -4,6 +4,7 @@ from cliente.schemas import Cliente
 import cliente.service as servicio
 from fastapi.templating import Jinja2Templates
 from login.login import Inicio, AuthHandler
+import Rifa.service as rifas
 from datetime import datetime
 
 router = APIRouter()
@@ -26,5 +27,11 @@ async def registrar_cliente(request : Request, cliente : Annotated[Cliente, Form
     return esto
 
 @router.post('/iniciar')
-async def iniciar_sesion(request : Request, data : Annotated[Inicio, Form()]): 
-    pass
+async def iniciar_sesion(request : Request, response : Response, data : Annotated[Inicio, Form()]): 
+    esto = await auth_handler.authenticate_user(data.cedula, data.contraseña, 'cliente')
+    completo = f'{esto.nombre} {esto.apellido}'
+    atoken = auth_handler.create_access_token(data={'cedula': esto.cedula, 'nombre_completo': completo, 'tipo': 'cliente', 'correo': esto.correo})
+    response.set_cookie(key="Authorization", value= f"{atoken}", httponly=True)
+    lista = rifas.listar_rifas_actuales()
+    return templates.TemplateResponse('index.html', {
+        'request': request, 'rifas': lista, 'verdad': True})

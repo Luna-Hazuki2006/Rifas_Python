@@ -16,6 +16,17 @@ def registrar_rifas(rifa : Rifa):
         return rifa
     return 'No se pudo registrar la rifa'
 
+def buscar_tiempo(fecha : datetime): 
+    tiempo = fecha - datetime.now()
+    if tiempo.seconds < 0: 
+        return False
+    if tiempo.days < 1: 
+        data = (tiempo.seconds / 60) / 60
+        tiempo = f'{data} horas'
+    else: 
+        tiempo = f'{tiempo.days} días'
+    return tiempo
+
 def listar_rifas(): 
     lista = Rifas.find({})
     return lista
