@@ -6,6 +6,9 @@ let elegido = 23
 
 function cambiar() {
     let aviso = document.getElementById('aviso')
+    if (new Date(final.value) == (new Date())) {
+        return
+    }
     let tiempo = (new Date(final.value)) - (new Date())
     aviso.innerText = 'Esta rifa termina en ' + tiempo + ' ¡Que no se te acabe el tiempo!'
     let disponibles = document.getElementsByClassName('disponible')
