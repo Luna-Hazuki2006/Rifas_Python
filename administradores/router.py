@@ -1,4 +1,5 @@
-from fastapi import APIRouter, Request, Form, Response
+from fastapi import APIRouter, Request, Form, Response, status
+from fastapi.responses import RedirectResponse
 from typing import Annotated
 from administradores.schemas import Administrador
 import administradores.service as servicio
@@ -23,15 +24,16 @@ async def listar_administradores(request : Request):
 
 @router.post('')
 async def registrar_administrador(request : Request, admin : Annotated[Administrador, Form()]): 
-    esto = servicio.registrar_administradores(admin)
-    return esto
+    auth_handler.registrar_usuario(admin, 'admin')
+    return RedirectResponse(url='/', status_code=status.HTTP_303_SEE_OTHER)
 
 @router.post('/iniciar')
 async def iniciar_sesion(request : Request, response : Response, data : Annotated[Inicio, Form()]): 
     esto = await auth_handler.authenticate_user(data.cedula, data.contraseña, 'admin')
     completo = f'{esto.nombre} {esto.apellido}'
     atoken = auth_handler.create_access_token(data={'cedula': esto.cedula, 'nombre_completo': completo, 'tipo': 'admin', 'correo': esto.correo})
-    response.set_cookie(key="Authorization", value= f"{atoken}", httponly=True)
     lista = rifas.listar_rifas_actuales()
-    return templates.TemplateResponse('index.html', {
+    response = templates.TemplateResponse('index.html', {
         'request': request, 'rifas': lista, 'verdad': True})
+    response.set_cookie(key="Authorization", value= f"{atoken}", httponly=True)
+    return response
