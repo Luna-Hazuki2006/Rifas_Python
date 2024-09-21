@@ -54,9 +54,9 @@ class AuthHandler():
             payload = jwt.decode(token, self.SECRET_KEY, algorithms=self.ALGORITHM)
             return payload
         except jwt.ExpiredSignatureError:
-            raise Exception('Hubo un error en el iniciar sesión')
+            raise LoginExpired()
         except jwt.JWTError as e:
-            raise Exception('Se expiró la sesión')
+            raise RequiresLoginException()
         # except Exception as e:
         #     raise RequiresLoginException()
         #!comentado esto de arriba para no morir en el intento de debbugear

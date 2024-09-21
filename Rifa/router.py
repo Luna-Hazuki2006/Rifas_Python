@@ -38,4 +38,4 @@ async def registrar_rifa(request : Request, rifa : Annotated[Rifa, Form()]):
 async def buscar_rifa(request : Request, codigo : Annotated[str, Form()], info = Depends(auth_handler.auth_wrapper)): 
     rifa = servicio.buscar_rifa(codigo)
     return templates.TemplateResponse('rifa.html', {
-        'request': request, 'rifa': rifa, 'info': info})
+        'request': request, 'rifa': rifa, 'token': info})

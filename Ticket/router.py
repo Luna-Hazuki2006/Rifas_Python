@@ -28,4 +28,4 @@ async def comprar_ticket(request : Request, rifa : str, compra : Annotated[Compr
     esto = servicio.comprar_ticket(rifa, compra.numero, compra.cedula)
     lista = rifadas.buscar_rifa(rifa)
     return templates.TemplateResponse('rifa.html', {
-        'request': request, 'rifa': lista, 'info': info})
+        'request': request, 'rifa': lista, 'token': info})

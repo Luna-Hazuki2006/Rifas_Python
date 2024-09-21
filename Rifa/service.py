@@ -44,12 +44,14 @@ def buscar_rifa(codigo : str):
     este = Rifa(
         codigo=este['codigo'], 
         premio=este['premio'], 
+        creador=este['creador'], 
         inicio=este['inicio'], 
         final=este['final'], 
         cantidad_tickets=este['cantidad_tickets'], 
         primer_numero=este['primer_numero'], 
         sorteo=este['sorteo'], 
         monto_venta=este['monto_venta'], 
+        participantes=este['participantes'], 
         tickets=este['tickets']
     )
     return este
