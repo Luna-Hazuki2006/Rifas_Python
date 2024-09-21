@@ -15,11 +15,13 @@
     <p><b>Con un clic seleccionas, con dos se quita la seleción.</b></p>
     <input type="hidden" name="final" id="final" value="{{ rifa['final'] }}">
     <input type="hidden" name="sorteo" id="sorteo" value="{{ rifa['sorteo'] }}">
+    {% if token['tipo'] == 'cliente' %}
     <form action="/tickets/{{ rifa['codigo'] }}" method="post">
         <input type="hidden" name="numero" id="numero" required>
-        <input type="hidden" name="cedula" id="cedula" required>
+        <input type="hidden" name="cedula" id="cedula" value="{{ token['cedula'] }}" required>
         <button type="submit">¡Comprar!</button>
     </form>
+    {% endif %}
     <section id="tickets">
         {% for esto in rifa['tickets'] %}
         {% if esto['estatus'] == False %}

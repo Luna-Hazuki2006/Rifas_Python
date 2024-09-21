@@ -7,11 +7,15 @@ let elegido = 23
 async function cambiar() {
     let aviso = document.getElementById('aviso')
     let tiempo = await fetch('/rifas/tiempo/' + final.value)
+    if (tiempo.status == 404) {
+        location.href = '/'
+        return
+    }
     console.log(tiempo);
     tiempo = await tiempo.json()
     console.log(tiempo);
-    
     aviso.innerText = 'Esta rifa termina en ' + tiempo + ' ¡Que no se te acabe el tiempo!'
+    if (!cedula) return
     let disponibles = document.getElementsByClassName('disponible')
     let codigo = document.getElementById('codigo')
     for (const esto of disponibles) {
@@ -22,7 +26,6 @@ async function cambiar() {
             }
             esto.classList.add('elegido')
             numero.value = esto.id
-            cedula.value = '333'
         })
         esto.addEventListener('dblclick', async () => {
             let uno = document.getElementsByClassName('elegido')
@@ -30,7 +33,6 @@ async function cambiar() {
                 este.classList.remove('elegido')
             }
             numero.value = ''
-            cedula.value = ''
         })
     }
 

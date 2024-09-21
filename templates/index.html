@@ -15,6 +15,27 @@
         <form action="/cerrar_sesion" method="post">
             <button type="submit">Cerrar sesión</button>
         </form>
+        <div>
+            {% if token['tipo'] == 'admin' %}
+            <details>
+                <summary>Tus rifas creadas</summary>
+                <ul>
+                    {% for esto in todos %}
+                    <li><a href="/rifas/{{ esto['codigo'] }}">{{ esto['codigo'] }}</a></li>
+                    {% endfor %}
+                </ul>
+            </details>
+            {% elif token['tipo'] == 'cliente' %}
+            <details>
+                <summary>Tus rifas participadas</summary>
+                <ul>
+                    {% for esto in todos %}
+                    <li><a href="/rifas/{{ esto['codigo'] }}">{{ esto['codigo'] }}</a></li>
+                    {% endfor %}
+                </ul>
+            </details>
+            {% endif %}
+        </div>
         {% else %}
         <details>
             <summary>¡Regístrate como administrador!</summary>
@@ -76,7 +97,7 @@
         </details>
         <details>
             <summary>¡Inicia sesión como administrador!</summary>
-            <form>
+            <form  action="/admins/iniciar" method="post">
                 <fieldset>
                     <legend>¡Hola admin!</legend>
                     <label for="cedula">
@@ -87,7 +108,7 @@
                         <span>Contraseña: </span>
                         <input type="password" name="contraseña" id="contraseña" required>
                     </label>
-                    <button type="button" onclick="cambiar(this);">¡Inicia sesión!</button>
+                    <button type="submit">¡Inicia sesión!</button>
                 </fieldset>
             </form>
         </details>
@@ -127,9 +148,7 @@
                         <span>Premio: </span>
                         <input type="url" name="premio" id="premio" required>
                     </label>
-                    <label for="creador">
-                        <input type="hidden" name="creador" id="creador" value="319" required>
-                    </label>
+                    <input type="hidden" name="creador" id="creador" value="{{ token['cedula'] }}" required>
                     <label for="inicio">
                         <span>Inicio: </span>
                         <input type="date" name="inicio" id="inicio" required>

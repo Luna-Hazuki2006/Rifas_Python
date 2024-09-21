@@ -34,6 +34,8 @@ def comprar_ticket(rifa : str, numero : int, cedula : str):
             esto['estatus'] = cedula
             compra = esto
             break
+    if cedula not in actual.participantes: 
+        actual.participantes.append(cedula)
     Rifas.replace_one({'codigo': rifa}, dict(actual))
     return compra
 

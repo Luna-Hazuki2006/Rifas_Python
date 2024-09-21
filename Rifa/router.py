@@ -21,6 +21,12 @@ async def listar_rifas(request : Request):
 async def buscar_actuales(request : Request): 
     return servicio.listar_rifas_actuales()
 
+@router.get('/{codigo}')
+async def buscar_este(request : Request, codigo : str, info = Depends(auth_handler.auth_wrapper)): 
+    esto = servicio.buscar_rifa(codigo)
+    return templates.TemplateResponse('rifa.html', {
+        'request': request, 'rifa': esto, 'token': info})
+
 @router.get('/revision/{codigo}')
 async def revisar_rifa(request : Request, codigo : str): 
     return servicio.revisar_codigo(codigo)
@@ -30,9 +36,10 @@ async def obtener_tiempo(tiempo : datetime):
     return servicio.buscar_tiempo(tiempo)
 
 @router.post('')
-async def registrar_rifa(request : Request, rifa : Annotated[Rifa, Form()]):
+async def registrar_rifa(request : Request, rifa : Annotated[Rifa, Form()], info = Depends(auth_handler.auth_wrapper)):
     esto = servicio.registrar_rifas(rifa)
-    return esto
+    return templates.TemplateResponse('rifa.html', {
+        'request': request, 'rifa': esto, 'token': info})
 
 @router.post('/entrar')
 async def buscar_rifa(request : Request, codigo : Annotated[str, Form()], info = Depends(auth_handler.auth_wrapper)): 

@@ -55,34 +55,42 @@ async def create_auth_header(request: Request, call_next,):
 
 @app.exception_handler(RequiresLoginException)
 async def exception_handler(request: Request, exc: RequiresLoginException) -> Response:
-    return templates.TemplateResponse("message-redirection.html", {"request": request, "message": exc.message, "path_route": exc.path_route, "path_message": exc.path_message})
+    return templates.TemplateResponse("index.html", {"request": request, 'token': None})
 
 @app.exception_handler(LoginExpired)
 async def exception_handler(request: Request, exc: RequiresLoginException) -> Response:
-    return templates.TemplateResponse("message-redirection.html", {"request": request, "message": exc.message, "path_route": exc.path_route, "path_message": exc.path_message})
+    return templates.TemplateResponse("index.html", {"request": request, 'token': None})
 
 @app.exception_handler(No_Administrador_Exception)
 async def exception_handler(request: Request, exc: RequiresLoginException) -> Response:
-    return templates.TemplateResponse("message-redirection.html", {"request": request, "message": exc.message, "path_route": exc.path_route, "path_message": exc.path_message})
+    return templates.TemplateResponse("index.html", {"request": request, 'token': None})
 
 @app.exception_handler(No_Cliente_Exception)
 async def exception_handler(request: Request, exc: RequiresLoginException) -> Response:
-    return templates.TemplateResponse("message-redirection.html", {"request": request, "message": exc.message, "path_route": exc.path_route, "path_message": exc.path_message})
+    return templates.TemplateResponse("index.html", {"request": request, 'token': None})
 
 @app.get("/")
-async def obtener(request : Request): 
+async def obtener(request : Request, info = Depends(auth_handler.auth_wrapper)): 
     lista = rifas.servicio.listar_rifas_actuales()
+    if info['tipo'] == 'admin': 
+        todos = rifas.servicio.listar_rifas_creadas(info['cedula'])
+        return templates.TemplateResponse('index.html', {
+            'request': request, 'rifas': lista, 'todos': todos, 'token': info})
+    elif info['tipo'] == 'cliente': 
+        todos = rifas.servicio.listar_rifas_participadas(info['cedula'])
+        return templates.TemplateResponse('index.html', {
+            'request': request, 'rifas': lista, 'todos': todos, 'token': info})
     return templates.TemplateResponse('index.html', {
-        'request': request, 'rifas': lista, 'token': None})
+        'request': request, 'rifas': lista, 'token': info})
 
 @app.post('/cambio')
 async def mandar(request : Request): 
     pass
 
 @app.post('/cerrar_sesion')
-async def cerrar_sesion(request : Request, response : Response, info = Depends(auth_handler.auth_wrapper)): 
+async def cerrar_sesion(request : Request, response : Response): 
     lista = rifas.servicio.listar_rifas_actuales()
     response = templates.TemplateResponse('index.html', {
-        'request': request, 'rifas': lista, 'token': info})
+        'request': request, 'rifas': lista, 'token': None})
     response.delete_cookie(key="Authorization")
     return response
