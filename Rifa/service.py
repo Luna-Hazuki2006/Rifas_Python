@@ -42,13 +42,13 @@ def listar_rifas_actuales():
 def listar_rifas_creadas(creador : str): 
     lista = []
     for esto in Rifas.find({'creador': creador}): 
-        lista.append(buscar_rifa(esto))
+        lista.append(buscar_rifa(esto['codigo']))
     return lista
 
 def listar_rifas_participadas(participante : str): 
     lista = []
     for esto in Rifas.find({'participantes': [participante]}): 
-        lista.append(buscar_rifa(esto))
+        lista.append(buscar_rifa(esto['codigo']))
     return lista
 
 def buscar_rifa(codigo : str): 

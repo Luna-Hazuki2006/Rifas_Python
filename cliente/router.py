@@ -34,7 +34,8 @@ async def iniciar_sesion(request : Request, response : Response, data : Annotate
     token = {'cedula': esto.cedula, 'nombre_completo': completo, 'tipo': 'cliente', 'correo': esto.correo}
     atoken = auth_handler.create_access_token(data=token)
     lista = rifas.listar_rifas_actuales()
+    todos = rifas.listar_rifas_participadas(token['cedula'])
     response = templates.TemplateResponse('index.html', {
-        'request': request, 'rifas': lista, 'token': token})
+        'request': request, 'rifas': lista, 'todos': todos, 'token': token})
     response.set_cookie(key="Authorization", value= f"{atoken}", httponly=True)
     return response

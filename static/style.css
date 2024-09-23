@@ -33,7 +33,7 @@ fieldset p {
     color: grey;
 }
 
-summary:hover {
+summary:hover, button:hover {
     cursor: pointer;
 }
 
