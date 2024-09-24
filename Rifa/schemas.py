@@ -1,4 +1,4 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, EmailStr
 from datetime import datetime
 
 class Rifa(BaseModel): 
@@ -13,3 +13,7 @@ class Rifa(BaseModel):
     monto_venta : float
     participantes : list[str] = []
     tickets : list[dict] = []
+    ganado : bool = False
+
+class EmailSchema(BaseModel):
+    email: list[EmailStr]

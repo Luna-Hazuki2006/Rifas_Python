@@ -23,9 +23,11 @@ async def buscar_actuales(request : Request):
 
 @router.get('/{codigo}')
 async def buscar_este(request : Request, codigo : str, info = Depends(auth_handler.auth_wrapper)): 
+    hoy = datetime.now()
     esto = servicio.buscar_rifa(codigo)
+    sorteo = esto.sorteo
     return templates.TemplateResponse('rifa.html', {
-        'request': request, 'rifa': esto, 'token': info})
+        'request': request, 'rifa': esto, 'hoy': hoy, 'sorteo': sorteo, 'token': info})
 
 @router.get('/revision/{codigo}')
 async def revisar_rifa(request : Request, codigo : str): 
@@ -43,6 +45,14 @@ async def registrar_rifa(request : Request, rifa : Annotated[Rifa, Form()], info
 
 @router.post('/entrar')
 async def buscar_rifa(request : Request, codigo : Annotated[str, Form()], info = Depends(auth_handler.auth_wrapper)): 
+    hoy = datetime.now()
     rifa = servicio.buscar_rifa(codigo)
+    sorteo = rifa.sorteo
+    return templates.TemplateResponse('rifa.html', {
+        'request': request, 'rifa': rifa, 'hoy': hoy, 'sorteo': sorteo, 'token': info})
+
+@router.post('/sortear/{codigo}')
+async def sortear_rifa(request : Request, codigo : str, info = Depends(auth_handler.auth_wrapper)): 
+    rifa = servicio.sortear_rifa(codigo)
     return templates.TemplateResponse('rifa.html', {
         'request': request, 'rifa': rifa, 'token': info})

@@ -10,6 +10,7 @@
 </head>
 <body>
     <p><a href="/"><span class="atras">⬅</span></a></p>
+    {% if rifa['ganado'] == False %}
     <h1>¡Hora de comprar tu ticket en la rifa {{ rifa['codigo'] }}!</h1>
     <p id="aviso"></p>
     <p><b>Con un clic seleccionas, con dos se quita la seleción.</b></p>
@@ -22,13 +23,25 @@
         <button type="submit">¡Comprar!</button>
     </form>
     {% endif %}
-    {% if token['tipo'] == 'admin' %}
-    
+    {% elif rifa['ganado'] == True %}
+    <p>¡Ya hay un ticket ganador!</p>
+    <p>Y este es el premio: </p>
+    <img src="{{ rifa['premio'] }}" alt="{{ rifa['premio'] }}">
+    {% endif %}
+    {% if rifa['creador'] == token['cedula'] and rifa['ganado'] == False and hoy <= sorteo %}
+    <form action="/sortear/{{ rifa['codigo'] }}" method="post">
+        <fieldset>
+            <legend>¡Sortear la rifa!</legend>
+            <button type="submit">¡Obtén al ganador!</button>
+        </fieldset>
+    </form>
     {% endif %}
     <section id="tickets">
         {% for esto in rifa['tickets'] %}
         {% if esto['estatus'] == False %}
         <div class="disponible" id="{{ esto['numero'] }}">{{ esto['numero'] }}</div>
+        {% elif token['tipo'] == 'admin' %}
+        <div class="comprado" title="Cédula de participante: {{ esto['estatus'] }}" id="{{ esto['numero'] }}">{{ esto['numero'] }}</div>
         {% else %}
         <div class="comprado" id="{{ esto['numero'] }}">{{ esto['numero'] }}</div>
         {% endif %}
