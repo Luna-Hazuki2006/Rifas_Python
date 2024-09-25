@@ -75,6 +75,12 @@ header {
     color: black;
 }
 
+.ganador {
+    border: 1px solid crimson;
+    background-color: yellow;
+    color: black;
+}
+
 .disponible:hover {
     cursor: pointer;
 }

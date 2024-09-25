@@ -53,6 +53,6 @@ async def buscar_rifa(request : Request, codigo : Annotated[str, Form()], info =
 
 @router.post('/sortear/{codigo}')
 async def sortear_rifa(request : Request, codigo : str, info = Depends(auth_handler.auth_wrapper)): 
-    rifa = servicio.sortear_rifa(codigo)
+    rifa = await servicio.sortear_rifa(codigo)
     return templates.TemplateResponse('rifa.html', {
         'request': request, 'rifa': rifa, 'token': info})

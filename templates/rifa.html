@@ -28,8 +28,8 @@
     <p>Y este es el premio: </p>
     <img src="{{ rifa['premio'] }}" alt="{{ rifa['premio'] }}">
     {% endif %}
-    {% if rifa['creador'] == token['cedula'] and rifa['ganado'] == False and hoy <= sorteo %}
-    <form action="/sortear/{{ rifa['codigo'] }}" method="post">
+    {% if rifa['creador'] == token['cedula'] and rifa['ganado'] == False and hoy >= sorteo %}
+    <form action="/rifas/sortear/{{ rifa['codigo'] }}" method="post">
         <fieldset>
             <legend>¡Sortear la rifa!</legend>
             <button type="submit">¡Obtén al ganador!</button>
@@ -38,10 +38,14 @@
     {% endif %}
     <section id="tickets">
         {% for esto in rifa['tickets'] %}
-        {% if esto['estatus'] == False %}
+        {% if esto['estatus'] == False and esto['ganador'] == False %}
         <div class="disponible" id="{{ esto['numero'] }}">{{ esto['numero'] }}</div>
-        {% elif token['tipo'] == 'admin' %}
+        {% elif esto['estatus'] == False and esto['ganador'] == True %}
+        <div class="ganador" id="{{ esto['numero'] }}">{{ esto['numero'] }}</div>
+        {% elif token['tipo'] == 'admin' and esto['ganador'] == False %}
         <div class="comprado" title="Cédula de participante: {{ esto['estatus'] }}" id="{{ esto['numero'] }}">{{ esto['numero'] }}</div>
+        {% elif token['tipo'] == 'admin' and esto['ganador'] == True %}
+        <div class="ganador" title="Cédula de participante: {{ esto['estatus'] }}" id="{{ esto['numero'] }}">{{ esto['numero'] }}</div>
         {% else %}
         <div class="comprado" id="{{ esto['numero'] }}">{{ esto['numero'] }}</div>
         {% endif %}

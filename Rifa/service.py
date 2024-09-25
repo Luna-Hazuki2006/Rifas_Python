@@ -18,6 +18,8 @@ conf = ConnectionConfig(
     VALIDATE_CERTS = True
 )
 
+porcia = 'https://static.wixstatic.com/media/28278e_0be5524cac4f423982fde05be7123be0~mv2.jpg/v1/fill/w_700,h_560,al_c,q_85,enc_auto/28278e_0be5524cac4f423982fde05be7123be0~mv2.jpg'
+
 def registrar_rifas(rifa : Rifa): 
     if Rifas.find_one({'codigo' : rifa.codigo}): 
         return 'Ese código ya existe, ¡intente otro!'
@@ -31,6 +33,7 @@ def registrar_rifas(rifa : Rifa):
     return 'No se pudo registrar la rifa'
 
 def buscar_tiempo(fecha : datetime): 
+    if fecha <= datetime.now(): return False
     tiempo = fecha - datetime.now()
     if tiempo.seconds < 0: 
         return False
@@ -80,7 +83,8 @@ async def sortear_rifa(codigo : str):
 <p>
     Gracias por jugar en la rifa {rifa.codigo} <br>
     Tristemente como en la vida, esta rifa no tuvo un ganador. <br>
-    ¡Pero no te desanimes! Puedes seguir jugando en https://rifas-python.onrender.com/
+    ¡Pero no te desanimes! Puedes seguir jugando en https://rifas-python.onrender.com/ <br>
+    <img src="{porcia}" alt="{porcia}">
 </p>
 """
         elif ganador['estatus'] != jugador['cedula']: 
@@ -89,7 +93,8 @@ async def sortear_rifa(codigo : str):
 <p>
     Gracias por jugar en la rifa {rifa.codigo} <br>
     Tristemente como en la vida, usted no ha ganado en esta rifa. <br>
-    ¡Pero no te desanimes! Puedes seguir jugando en https://rifas-python.onrender.com/
+    ¡Pero no te desanimes! Puedes seguir jugando en https://rifas-python.onrender.com/ <br>
+    <img src="{porcia}" alt="{porcia}">
 </p>
 """
         elif ganador['estatus'] == jugador['cedula']: 
@@ -108,6 +113,7 @@ async def sortear_rifa(codigo : str):
 <h1>¡Fin de la rifa!</h1>
 <p>
     ... Y algo muy extrañó acaba de pasar <br>
+    <img src="{porcia}" alt="{porcia}">
     Juega más en https://rifas-python.onrender.com/
 </p>
 '''

@@ -5,6 +5,9 @@ let final = document.getElementById('final')
 let elegido = 23
 
 async function cambiar() {
+    if (!final) {
+        return
+    }
     let aviso = document.getElementById('aviso')
     let tiempo = await fetch('/rifas/tiempo/' + final.value)
     if (tiempo.status == 404) {
@@ -14,6 +17,10 @@ async function cambiar() {
     console.log(tiempo);
     tiempo = await tiempo.json()
     console.log(tiempo);
+    if (tiempo == false) {
+        aviso.innerText = 'Esta rifa se acabó, ¡Espera por los resultados!'
+        return
+    }
     aviso.innerText = 'Esta rifa termina en ' + tiempo + ' ¡Que no se te acabe el tiempo!'
     if (!cedula) return
     let disponibles = document.getElementsByClassName('disponible')
